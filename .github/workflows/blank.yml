@@ -30,7 +30,7 @@ jobs:
       - name: Copy Gist File to Repo
         run: |
           # 替换为实际的 Gist 文件名和仓库目标路径
-          cp ~/gist-temp/sing-box ./repo-target-folder/sing-box
+          cp ~/gist-temp/sing-box ./sing-box
           # 如需同步多个文件，新增 cp 命令即可
           # cp ~/gist-temp/文件2.sh ./scripts/文件2.sh
 
