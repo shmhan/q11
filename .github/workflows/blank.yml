@@ -16,21 +16,37 @@ jobs:
         with:
           persist-credentials: true
 
-      # 2. 克隆 Gist 仓库（核心步骤）
+      # 2. 克隆 Gist 仓库（修复端口解析错误）
       - name: Clone Gist Repository
         env:
-          GIST_ID: "79892c1a70b3a5864afa4734de7e109b"          # 替换为你的 Gist ID
-          GITHUB_USERNAME: "ylm1982@gmail.com" # 替换为你的 GitHub 用户名
-          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
+          GIST_ID: "79892c1a70b3a5864afa4734de7e109b"  # 你的 Gist ID（无需修改）
+          GIST_TOKEN: ${{ secrets.GIST_TOKEN }}        # 你的 Secrets 令牌
         run: |
+          # 创建临时目录
           mkdir -p ~/gist-temp
-          git clone https://${GIST_TOKEN}@gist.github.com/${GIST_ID}.git ~/gist-temp
+          
+          # 配置 Git 凭证（核心修复：避开 URL 拼接令牌导致的解析错误）
+          git config --global credential.helper store
+          echo "https://${GIST_TOKEN}:x-oauth-basic@gist.github.com" > ~/.git-credentials
+          
+          # 克隆 Gist（纯 URL 格式，无令牌拼接）
+          git clone https://gist.github.com/${GIST_ID}.git ~/gist-temp
+          
+          # 验证克隆结果（方便排查问题）
+          echo "=== Gist 克隆文件列表 ==="
           ls -la ~/gist-temp
+          echo "=== 确认 sing-box 文件存在 ==="
+          if [ -f ~/gist-temp/sing-box ]; then
+            echo "✅ sing-box 文件克隆成功"
+          else
+            echo "❌ sing-box 文件未找到"
+            exit 1
+          fi
 
       # 3. 复制 Gist 中的目标文件到 GitHub 仓库
       - name: Copy Gist File to Repo
         run: |
-          # 替换为实际的 Gist 文件名和仓库目标路径
+          # 复制 Gist 中的 sing-box 文件到仓库根目录
           cp ~/gist-temp/sing-box ./sing-box
           # 如需同步多个文件，新增 cp 命令即可
           # cp ~/gist-temp/文件2.sh ./scripts/文件2.sh
