@@ -8,53 +8,52 @@ jobs:
   sync-gist:
     runs-on: ubuntu-latest
     permissions:
-      # 关键：赋予 Actions 推送代码的权限
-      contents: write
+      contents: write  # 显式赋予写权限
     steps:
-      # 1. 检出当前 GitHub 仓库（修改 persist-credentials 为 false，避免权限冲突）
+      # 1. 检出仓库（关键：禁用默认凭证，拉取完整历史）
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          persist-credentials: false  # 禁用默认凭证
-          fetch-depth: 0              # 拉取完整历史，避免推送冲突
+          persist-credentials: false  # 禁用默认只读凭证
+          fetch-depth: 0              # 拉取完整仓库历史，避免推送冲突
 
-      # 2. 直接下载 Gist 文件（已成功，保留）
+      # 2. 下载 Gist 文件（已验证成功）
       - name: Download Gist File Directly
         env:
           GIST_RAW_URL: "https://gist.githubusercontent.com/shmhan/79892c1a70b3a5864afa4734de7e109b/raw/c6489afcede13bac825169197988cff7fb4e92ee/sing-box"
         run: |
           mkdir -p ~/gist-temp
           curl -sSL "${GIST_RAW_URL}" -o ~/gist-temp/sing-box
-          echo "=== 验证下载结果 ==="
-          ls -la ~/gist-temp
-          if [ -f ~/gist-temp/sing-box ]; then
-            echo "✅ sing-box 文件下载成功"
-            head -5 ~/gist-temp/sing-box
-          else
-            echo "❌ sing-box 文件下载失败"
+          # 验证下载
+          if [ ! -f ~/gist-temp/sing-box ]; then
+            echo "❌ Gist 文件下载失败"
             exit 1
           fi
+          echo "✅ Gist 文件下载成功"
 
       # 3. 复制文件到仓库
       - name: Copy Gist File to Repo
         run: |
           cp ~/gist-temp/sing-box ./sing-box
+          ls -la ./sing-box  # 验证文件复制成功
 
-      # 4. 提交并推送变更（使用 PAT 令牌授权推送）
+      # 4. 提交并推送（核心：用 PAT 令牌授权推送）
       - name: Commit and Push Changes
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_EMAIL: ${{ github.actor }}@users.noreply.github.com
-          # 使用你之前创建的 GIST_TOKEN（或单独创建的 PAT 令牌）进行推送
-          PAT_TOKEN: ${{ secrets.GIST_TOKEN }}
+          PAT_TOKEN: ${{ secrets.GIST_TOKEN }}  # 你的 PAT 令牌（需含 repo 权限）
+          REPO_URL: "https://github.com/shmhan/q11.git"  # 你的仓库 URL
         run: |
-          git config --global user.name "${GITHUB_ACTOR}"
-          git config --global user.email "${GITHUB_EMAIL}"
-          git add .
+          # 配置 Git 用户名和邮箱
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 提交变更
+          git add ./sing-box
           if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Auto-sync from Gist: $(date '+%Y-%m-%d %H:%M:%S')"
-            # 使用 PAT 令牌推送，避免权限不足
-            git push https://${PAT_TOKEN}@github.com/${{ github.repository }}.git main
+            echo "📌 无文件变更，无需提交"
+            exit 0
           fi
+          git commit -m "Auto-sync Gist sing-box file: $(date '+%Y-%m-%d %H:%M:%S')"
+          
+          # 用 PAT 令牌推送（彻底解决 403 权限问题）
+          git push "https://${PAT_TOKEN}@${REPO_URL#https://}" main
