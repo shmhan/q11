@@ -24,7 +24,8 @@ jobs:
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: |
           mkdir -p ~/gist-temp
-          git clone https://${GITHUB_USERNAME}:${GIST_TOKEN}@gist.github.com/${GIST_ID}.git ~/gist-temp
+          git clone https://${GIST_TOKEN}@gist.github.com/${GIST_ID}.git ~/gist-temp
+          ls -la ~/gist-temp
 
       # 3. 复制 Gist 中的目标文件到 GitHub 仓库
       - name: Copy Gist File to Repo
