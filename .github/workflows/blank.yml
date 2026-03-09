@@ -19,7 +19,7 @@ jobs:
       # 2. 克隆 Gist 仓库（核心步骤）
       - name: Clone Gist Repository
         env:
-          GIST_ID: "shmhan"          # 替换为你的 Gist ID
+          GIST_ID: "79892c1a70b3a5864afa4734de7e109b"          # 替换为你的 Gist ID
           GITHUB_USERNAME: "ylm1982@gmail.com" # 替换为你的 GitHub 用户名
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: |
