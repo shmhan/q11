@@ -7,47 +7,46 @@ on:
 jobs:
   sync-gist:
     runs-on: ubuntu-latest
+    permissions:
+      # 关键：赋予 Actions 推送代码的权限
+      contents: write
     steps:
-      # 1. 检出当前 GitHub 仓库
+      # 1. 检出当前 GitHub 仓库（修改 persist-credentials 为 false，避免权限冲突）
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          persist-credentials: true
+          persist-credentials: false  # 禁用默认凭证
+          fetch-depth: 0              # 拉取完整历史，避免推送冲突
 
-      # 2. 直接下载 Gist 文件（替代克隆，彻底解决 URL 问题）
+      # 2. 直接下载 Gist 文件（已成功，保留）
       - name: Download Gist File Directly
         env:
-          # Gist 原始文件的完整 URL（从你的 Gist Raw 页面复制）
           GIST_RAW_URL: "https://gist.githubusercontent.com/shmhan/79892c1a70b3a5864afa4734de7e109b/raw/c6489afcede13bac825169197988cff7fb4e92ee/sing-box"
         run: |
-          # 创建临时目录
           mkdir -p ~/gist-temp
-          
-          # 直接下载文件（无需 Git 克隆，避开 URL 解析问题）
           curl -sSL "${GIST_RAW_URL}" -o ~/gist-temp/sing-box
-          
-          # 验证文件是否下载成功
           echo "=== 验证下载结果 ==="
           ls -la ~/gist-temp
           if [ -f ~/gist-temp/sing-box ]; then
             echo "✅ sing-box 文件下载成功"
-            # 可选：查看文件前几行确认内容
             head -5 ~/gist-temp/sing-box
           else
             echo "❌ sing-box 文件下载失败"
             exit 1
           fi
 
-      # 3. 复制文件到仓库（和原逻辑一致）
+      # 3. 复制文件到仓库
       - name: Copy Gist File to Repo
         run: |
           cp ~/gist-temp/sing-box ./sing-box
 
-      # 4. 提交并推送变更（和原逻辑一致）
+      # 4. 提交并推送变更（使用 PAT 令牌授权推送）
       - name: Commit and Push Changes
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          # 使用你之前创建的 GIST_TOKEN（或单独创建的 PAT 令牌）进行推送
+          PAT_TOKEN: ${{ secrets.GIST_TOKEN }}
         run: |
           git config --global user.name "${GITHUB_ACTOR}"
           git config --global user.email "${GITHUB_EMAIL}"
@@ -56,5 +55,6 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Auto-sync from Gist: $(date '+%Y-%m-%d %H:%M:%S')"
-            git push origin main
+            # 使用 PAT 令牌推送，避免权限不足
+            git push https://${PAT_TOKEN}@github.com/${{ github.repository }}.git main
           fi
