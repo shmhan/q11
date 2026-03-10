@@ -1,0 +1,194 @@
+{
+  "outbounds": [
+    {
+      "tag": "台湾省台中市+中华电信",
+      "type": "trojan",
+      "server": "green2.cdntencentmusic.com",
+      "server_port": 31103,
+      "password": "4250b3bb-d1ae-4e77-bf71-4069e0d2c383",
+      "tls": {
+        "enabled": true,
+        "server_name": "green2.cdntencentmusic.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "加拿大+V2CROSS.COM",
+      "type": "trojan",
+      "server": "167.17.185.172",
+      "server_port": 10889,
+      "password": "cTv.9PDdCt-wybBrG1qlxI5UJuaEj",
+      "tls": {
+        "enabled": true,
+        "server_name": "web.max.ru",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "加拿大+V2CROSS.COM",
+      "type": "trojan",
+      "server": "167.17.185.169",
+      "server_port": 10889,
+      "password": "cTv.9PDdCt-wybBrG1qlxI5UJuaEj",
+      "tls": {
+        "enabled": true,
+        "server_name": "ya.ru",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "加拿大+V2CROSS.COM",
+      "type": "trojan",
+      "server": "167.17.185.152",
+      "server_port": 10889,
+      "password": "cTv.9PDdCt-wybBrG1qlxI5UJuaEj",
+      "tls": {
+        "enabled": true,
+        "server_name": "ozon.ru",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "美国+V2CROSS.COM",
+      "type": "vless",
+      "server": "209.17.118.131",
+      "server_port": 26403,
+      "uuid": "2ab6258a-6670-4875-ab65-60999b764f87"
+    },
+    {
+      "tag": "中国 V2CROSS.COM",
+      "type": "vmess",
+      "server": "v12.hdacd.com",
+      "server_port": 30812,
+      "uuid": "cbb3f877-d1fb-344c-87a9-d153bffd5484",
+      "security": "auto",
+      "alter_id": 0
+    },
+    {
+      "tag": "台湾省台中市+中华电信",
+      "type": "trojan",
+      "server": "green2.cdntencentmusic.com",
+      "server_port": 35501,
+      "password": "11cfbea5-eae4-4654-8aa9-a9481f38dc42",
+      "tls": {
+        "enabled": true,
+        "server_name": "green2.cdntencentmusic.com",
+        "insecure": false,
+        "utls": {
+          "enabled": true,
+          "fingerprint": "chrome"
+        }
+      }
+    },
+    {
+      "tag": "广东省广州市+电信IDC机房",
+      "type": "shadowsocks",
+      "server": "iepl.huli168.com",
+      "server_port": 19822,
+      "method": "aes-256-gcm",
+      "password": "g4JtpkuxkwRH4jhj"
+    },
+    {
+      "tag": "甘肃省兰州市+移动",
+      "type": "shadowsocks",
+      "server": "ldu.izenny.com",
+      "server_port": 20149,
+      "method": "chacha20-ietf-poly1305",
+      "password": "c6d61cd1-d3dc-405e-afb2-d67815f4e4da"
+    },
+    {
+      "tag": "甘肃省兰州市+移动",
+      "type": "shadowsocks",
+      "server": "ldu.izenny.com",
+      "server_port": 28063,
+      "method": "chacha20-ietf-poly1305",
+      "password": "c6d61cd1-d3dc-405e-afb2-d67815f4e4da"
+    },
+    {
+      "tag": "[586] 🇹🇼TW²_1|0.7MB/s|GPT⁺|GM|YT|NF|D+|X|History|[原生|住宅]",
+      "type": "http",
+      "server": "twmoon1-cdn-route.couldflare-cdn.com",
+      "server_port": 1443,
+      "tls": {
+        "enabled": true,
+        "server_name": "twmoon1-cdn-route.couldflare-cdn.com",
+        "insecure": false
+      },
+      "username": "mrwdfNTD8M79LCukCieldrqZWqs=",
+      "password": "exaxgqkKkd0TAMrCxeonWg=="
+    },
+    {
+      "tag": "[2986] 🇻🇳VN²_2|0.8MB/s|GPT⁺|GM|X|History",
+      "type": "shadowsocks",
+      "server": "103.186.155.9",
+      "server_port": 38388,
+      "method": "aes-256-cfb",
+      "password": "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+    },
+    {
+      "tag": "[671] 🇨🇾CY²_1|0.7MB/s|X",
+      "type": "shadowsocks",
+      "server": "ldu.izenny.com",
+      "server_port": 59906,
+      "method": "chacha20-ietf-poly1305",
+      "password": "c6d61cd1-d3dc-405e-afb2-d67815f4e4da"
+    },
+    {
+      "tag": "[709] 🇻🇳VN²_9|2.0MB/s|GPT⁺|GM|X|History|[原生|机房]",
+      "type": "shadowsocks",
+      "server": "103.186.154.4",
+      "server_port": 38388,
+      "method": "aes-256-cfb",
+      "password": "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+    },
+    {
+      "tag": "[462] 🇸🇬SG²_2|1.6MB/s|39%|GPT⁺|X|History",
+      "type": "vmess",
+      "server": "v12.hdacd.com",
+      "server_port": 30812,
+      "uuid": "cbb3f877-d1fb-344c-87a9-d153bffd5484",
+      "security": "auto",
+      "alter_id": 0
+    },
+    {
+      "tag": "[2692] 🇻🇳VN²_12|2.1MB/s|GPT|X|History|[原生|机房]",
+      "type": "shadowsocks",
+      "server": "103.186.154.242",
+      "server_port": 38388,
+      "method": "aes-256-cfb",
+      "password": "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+    },
+    {
+      "tag": "[3008] 🇻🇳VN²_15|1.6MB/s|GPT⁺|GM|YT|X|History|[原生|机房]",
+      "type": "shadowsocks",
+      "server": "103.186.154.57",
+      "server_port": 38388,
+      "method": "aes-256-cfb",
+      "password": "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+    },
+    {
+      "tag": "[2786] 🇻🇳VN²_16|2.3MB/s|X|History|[原生|机房]",
+      "type": "shadowsocks",
+      "server": "103.186.155.37",
+      "server_port": 38388,
+      "method": "aes-256-cfb",
+      "password": "Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV"
+    }
+  ]
+}
